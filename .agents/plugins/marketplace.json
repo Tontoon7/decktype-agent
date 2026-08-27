@@ -1,0 +1,20 @@
+{
+  "name": "decktype-agent",
+  "interface": {
+    "displayName": "Decktype Agent"
+  },
+  "plugins": [
+    {
+      "name": "decktype",
+      "source": {
+        "source": "local",
+        "path": "./plugins/decktype"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

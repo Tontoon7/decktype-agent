@@ -1,0 +1,19 @@
+{
+  "name": "decktype",
+  "displayName": "Decktype",
+  "version": "1.0.0",
+  "description": "Create, revise, render, and export editable Decktype presentations with Claude Code.",
+  "author": {
+    "name": "Decktype",
+    "url": "https://decktype.com"
+  },
+  "homepage": "https://decktype.com/en/agents",
+  "repository": "https://github.com/Tontoon7/decktype-agent",
+  "license": "MIT",
+  "keywords": [
+    "presentations",
+    "powerpoint",
+    "slides",
+    "decktype"
+  ]
+}

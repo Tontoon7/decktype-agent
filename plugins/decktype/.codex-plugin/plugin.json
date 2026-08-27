@@ -1,0 +1,38 @@
+{
+  "name": "decktype",
+  "version": "1.0.0",
+  "description": "Create, revise, render, and export editable Decktype presentations with an AI coding agent.",
+  "author": {
+    "name": "Decktype",
+    "url": "https://decktype.com"
+  },
+  "homepage": "https://decktype.com/en/agents",
+  "repository": "https://github.com/Tontoon7/decktype-agent",
+  "license": "MIT",
+  "keywords": [
+    "presentations",
+    "powerpoint",
+    "slides",
+    "decktype"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Decktype",
+    "shortDescription": "Build editable presentations with your agent.",
+    "longDescription": "Create structured .deck presentations, preserve human edits, inspect rendered slides, and export deliverables from Codex.",
+    "developerName": "Decktype",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "websiteURL": "https://decktype.com",
+    "privacyPolicyURL": "https://decktype.com/en/privacy",
+    "termsOfServiceURL": "https://decktype.com/en/terms",
+    "defaultPrompt": [
+      "Create an editable presentation from this brief.",
+      "Revise this Decktype deck without losing my edits.",
+      "Render and review this deck before I export it."
+    ],
+    "brandColor": "#0F62FE"
+  }
+}
