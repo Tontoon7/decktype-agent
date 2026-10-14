@@ -109,11 +109,17 @@ Import PowerPoint into a new Decktype source:
 deck import source.pptx --out imported.deck --json
 ```
 
-Export the validated source to a PowerPoint delivery artifact:
+Export the validated source to a PDF delivery artifact, available on every plan:
+
+```sh
+deck pdf presentation.deck --out presentation.pdf
+```
+
+Export the validated source to a PowerPoint delivery artifact. This requires a signed-in Decktype Pro or Autonomous plan; otherwise the command exits with status 3 and writes nothing:
 
 ```sh
 deck export presentation.deck --out presentation.pptx
 ```
 
-Import and export can surface warnings or destination-specific differences. Inspect the `.deck` render after import and open the actual `.pptx` after export.
+Import and export can surface warnings or destination-specific differences. Inspect the `.deck` render after import and open the actual `.pdf` or `.pptx` after export.
 

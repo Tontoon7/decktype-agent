@@ -1,0 +1,18 @@
+{
+  "version": "1.3.2",
+  "source": "deck --help and deck <command> --help of the deck CLI 1.3.2 shipped with Decktype",
+  "global_options": ["--help", "--version"],
+  "commands": {
+    "new": {"options": ["--title", "--theme"]},
+    "validate": {"options": ["--json"]},
+    "lint": {"options": ["--json", "--strict", "--visual"]},
+    "inspect": {"options": ["--json"]},
+    "regenerate": {"options": []},
+    "templates list": {"options": ["--json"]},
+    "templates show": {"options": ["--json"]},
+    "import": {"options": ["--out", "--json"]},
+    "export": {"options": ["--out", "--json"]},
+    "render": {"options": ["--out", "--slide", "--scale"]},
+    "pdf": {"options": ["--out", "--json"], "requires": "1.3.2"}
+  }
+}

@@ -1,6 +1,6 @@
 ---
 name: decktype
-description: Create, revise, validate, render, import, or export editable Decktype presentations. Use for a Decktype .deck file, an agent-built slide deck that must remain editable, or a PowerPoint workflow that should end in Decktype or export to .pptx. Do not use for ordinary Markdown documents or image-only slideshows.
+description: Create, revise, validate, render, import, or export editable Decktype presentations. Use for a Decktype .deck file, an agent-built slide deck that must remain editable and be delivered as a PDF, or a PowerPoint workflow that should end in Decktype or export to .pptx. Do not use for ordinary Markdown documents or image-only slideshows.
 ---
 
 # Decktype
@@ -14,14 +14,17 @@ Two invariants protect the human-agent round trip:
 
 ## Check the local setup
 
-Start with:
+Decktype installs the `deck` CLI when the user chooses **Connect an agent** in the app, but does not add it to the shell `PATH`. Start with:
 
 ```sh
+export PATH="$HOME/Library/Application Support/Decktype/bin:$PATH"
 command -v deck
 deck --version
 ```
 
-If `deck` is unavailable, stop and ask the user to install Decktype, open the app, and choose **Connect an agent**. Do not invent an install path or download and execute a binary on the user's behalf.
+If `deck` is unavailable, stop and ask the user to install Decktype, open the app, and choose **Connect an agent**. Do not invent another install path or download and execute a binary on the user's behalf.
+
+This skill targets `deck` 1.3.2 or newer. If `deck pdf --help` fails, ask the user to update Decktype and choose **Connect an agent** again.
 
 Judge document compatibility by the bundle's `format_version`, not only by the CLI version.
 
@@ -32,7 +35,7 @@ For a new deck, establish:
 - the audience;
 - the decision or action the deck should produce;
 - the source material and facts that may be used;
-- the delivery format (`.deck` only, or an additional `.pptx`).
+- the delivery format (`.deck` only, or an additional `.pdf` or `.pptx`).
 
 Propose a short slide outline with one message per slide and wait for approval before creating the file. A detailed user-provided brief or explicit advance approval counts as approval.
 
@@ -113,13 +116,25 @@ deck render imported.deck --out imported-preview
 
 Imported slides are normally free slides rather than template-bound slides. Read every importer warning and inspect every preview. Rebuild only the slides that benefit from reusable template bindings.
 
+## Export to PDF
+
+PDF export is available on every Decktype plan, including Free. Export only after the final validation and visual review:
+
+```sh
+deck pdf presentation.deck --out presentation.pdf
+```
+
+The PDF has one vector page per slide and uses the same renderer as the app. Check the page count and open the file before delivering it. Keep both files: the `.pdf` is a delivery artifact, not a replacement for the `.deck` source.
+
 ## Export to PowerPoint
 
-The `.deck` file remains the editable source. Export only after the final validation and visual review:
+PowerPoint export requires a Decktype Pro or Autonomous plan signed in on this Mac. The `.deck` file remains the editable source. Export only after the final validation and visual review:
 
 ```sh
 deck export presentation.deck --out presentation.pptx
 ```
+
+If the command exits with status 3, the plan does not include PowerPoint export or nobody is signed in. Nothing was written. Do not work around the refusal and do not sign in on the user's behalf: relay the CLI message to the user, then deliver the `.deck` and, if useful, a PDF in the meantime.
 
 Open the `.pptx` in the intended destination application and check fonts, charts, and complex positioning. Keep both files: the `.pptx` is a delivery artifact, not a replacement for the `.deck` source.
 
@@ -133,5 +148,5 @@ Open the `.pptx` in the intended destination application and check fonts, charts
 - `deck validate` reports zero errors and every warning was understood.
 - `deck lint` findings were reviewed.
 - Every changed slide was rendered and visually inspected.
-- The final `.deck` opens in Decktype; any requested `.pptx` was also checked.
+- The final `.deck` opens in Decktype; any requested `.pdf` or `.pptx` was also checked.
 

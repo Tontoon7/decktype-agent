@@ -1,7 +1,7 @@
 {
   "name": "decktype",
-  "version": "1.0.0",
-  "description": "Create, revise, render, and export editable Decktype presentations with an AI coding agent.",
+  "version": "1.1.0",
+  "description": "Create, revise, render, and export editable Decktype presentations with an AI coding agent: PDF on every plan, PowerPoint on Pro and Autonomous plans. Requires the Decktype app on an Apple silicon Mac.",
   "author": {
     "name": "Decktype",
     "url": "https://decktype.com"
@@ -11,15 +11,19 @@
   "license": "MIT",
   "keywords": [
     "presentations",
-    "powerpoint",
     "slides",
-    "decktype"
+    "powerpoint",
+    "pptx",
+    "pdf",
+    "keynote",
+    "decktype",
+    "macos"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Decktype",
     "shortDescription": "Build editable presentations with your agent.",
-    "longDescription": "Create structured .deck presentations, preserve human edits, inspect rendered slides, and export deliverables from Codex.",
+    "longDescription": "Create structured .deck presentations, preserve human edits, inspect rendered slides, and export a PDF on every plan or a PowerPoint file on Pro and Autonomous plans, from Codex. Requires the Decktype app on an Apple silicon Mac with macOS 11 or newer.",
     "developerName": "Decktype",
     "category": "Productivity",
     "capabilities": [
@@ -31,7 +35,7 @@
     "defaultPrompt": [
       "Create an editable presentation from this brief.",
       "Revise this Decktype deck without losing my edits.",
-      "Render and review this deck before I export it."
+      "Render and review this deck, then export it to PDF."
     ],
     "brandColor": "#0F62FE"
   }
