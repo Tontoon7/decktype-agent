@@ -1,8 +1,8 @@
 {
   "name": "decktype",
   "displayName": "Decktype",
-  "version": "1.0.0",
-  "description": "Create, revise, render, and export editable Decktype presentations with Claude Code.",
+  "version": "1.1.0",
+  "description": "Create, revise, render, and export editable Decktype presentations with Claude Code: PDF on every plan, PowerPoint on Pro and Autonomous plans. Requires the Decktype app on an Apple silicon Mac.",
   "author": {
     "name": "Decktype",
     "url": "https://decktype.com"
@@ -12,8 +12,12 @@
   "license": "MIT",
   "keywords": [
     "presentations",
-    "powerpoint",
     "slides",
-    "decktype"
+    "powerpoint",
+    "pptx",
+    "pdf",
+    "keynote",
+    "decktype",
+    "macos"
   ]
 }
