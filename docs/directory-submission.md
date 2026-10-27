@@ -4,7 +4,7 @@ Ready-to-paste texts for the Claude Code and Codex plugin directories, in Englis
 
 ## Before submitting
 
-- Proposed plugin version: `1.1.0`, identical in the four manifest version fields. The matching `v1.1.0` version tag is created by the maintainer once the release is approved, never by these texts.
+- The plugin version matches the Decktype app version on every release. The matching version tag is created by the maintainer once the release is approved, never by these texts.
 - Check each directory's current submission requirements (field names, length limits, screenshots, review policy) before pasting. The lengths below fit the usual limits: tagline under 80 characters, short description under 200 characters.
 - Screenshot: [plugins/decktype/examples/slide-01.png](../plugins/decktype/examples/slide-01.png) and the three other example slides.
 - Install from GitHub once more after the release is merged, with the commands below.
@@ -19,9 +19,9 @@ Ready-to-paste texts for the Claude Code and Codex plugin directories, in Englis
 
 **Long description:**
 
-Decktype Agent connects Claude Code and Codex to Decktype, the native presentation editor for Mac. The agent agrees on the audience and the decision with you, proposes an outline, then fills structured Decktype templates instead of drawing flattened slides. It validates, lints, and renders every changed slide, and reviews the images before delivering.
+Decktype Agent connects Claude Code and Codex to Decktype, the native presentation editor for Mac. The agent agrees on the audience and the decision with you, proposes an outline, then builds editable presentations. It validates, lints, and renders every changed slide, and reviews the images before delivering. The complete skill also supports image generation, premium template packs, and hosting and sharing through Decktype Cloud.
 
-The result is an editable `.deck` file that you keep refining by hand in Decktype. When the agent revises the deck later, your manual layout changes are preserved. The plugin can also import an existing PowerPoint file, export a PDF on every plan, and export a Keynote-compatible PowerPoint file on the Pro and Autonomous plans.
+The result is an editable presentation that you can keep refining in Decktype. When the agent revises it later, your manual layout changes are preserved. The plugin can also import an existing PowerPoint file, export a PDF on every plan, and export a Keynote-compatible PowerPoint file on the Pro and Autonomous plans.
 
 **Category:** Productivity
 
@@ -41,7 +41,7 @@ The result is an editable `.deck` file that you keep refining by hand in Decktyp
 
 The plugin itself is free and open source (MIT).
 
-**Data and privacy:** the plugin adds no hooks, no background service, no MCP server, and no bundled executable. It runs the local `deck` CLI installed by Decktype on the files you place in the agent's scope; your `.deck` files stay on your disk. Your agent follows its own provider's terms.
+**Data and privacy:** the plugin adds no hooks, no background service, no MCP server, and no bundled executable. It runs the local `deck` CLI installed by Decktype on the files you place in the agent's scope. Decktype Cloud features host and share content when used. Your agent follows its own provider's terms.
 
 **Example prompts:**
 
@@ -82,9 +82,9 @@ codex plugin add decktype@decktype-agent
 
 **Description longue :**
 
-Decktype Agent relie Claude Code et Codex à Decktype, l'éditeur de présentations natif pour Mac. L'agent convient avec vous du public et de la décision attendue, propose un plan, puis remplit des templates Decktype structurés au lieu de dessiner des slides figées. Il valide, contrôle et rend chaque slide modifiée, et relit les images avant de livrer.
+Decktype Agent relie Claude Code et Codex à Decktype, l'éditeur de présentations natif pour Mac. L'agent convient avec vous du public et de la décision attendue, propose un plan, puis construit des présentations modifiables. Il valide, contrôle et rend chaque slide modifiée, et relit les images avant de livrer. Le skill complet permet aussi la génération d'images, les packs premium et l'hébergement et le partage avec Decktype Cloud.
 
-Le résultat est un fichier `.deck` modifiable, que vous continuez de retoucher à la main dans Decktype. Quand l'agent révise ensuite la présentation, vos retouches de mise en page sont conservées. Le plugin sait aussi importer un fichier PowerPoint existant, exporter un PDF avec toutes les offres et exporter un fichier PowerPoint compatible Keynote avec les offres Pro et Autonomous.
+Le résultat est une présentation modifiable, que vous continuez de retoucher dans Decktype. Quand l'agent la révise ensuite, vos retouches de mise en page sont conservées. Le plugin sait aussi importer un fichier PowerPoint existant, exporter un PDF avec toutes les offres et exporter un fichier PowerPoint compatible Keynote avec les offres Pro et Autonomous.
 
 **Catégorie :** Productivité (Productivity)
 
@@ -104,7 +104,7 @@ Le résultat est un fichier `.deck` modifiable, que vous continuez de retoucher 
 
 Le plugin lui-même est gratuit et open source (MIT).
 
-**Données et confidentialité :** le plugin n'ajoute ni hook, ni service en arrière-plan, ni serveur MCP, ni exécutable embarqué. Il lance la CLI `deck` locale installée par Decktype sur les fichiers que vous placez dans le périmètre de l'agent ; vos fichiers `.deck` restent sur votre disque. Votre agent suit les conditions de son propre fournisseur.
+**Données et confidentialité :** le plugin n'ajoute ni hook, ni service en arrière-plan, ni serveur MCP, ni exécutable embarqué. Il lance la CLI `deck` locale installée par Decktype sur les fichiers que vous placez dans le périmètre de l'agent. Les fonctions Decktype Cloud hébergent et partagent du contenu lorsqu'elles sont utilisées. Votre agent suit les conditions de son propre fournisseur.
 
 **Exemples d'invites :**
 

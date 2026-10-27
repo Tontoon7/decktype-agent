@@ -15,7 +15,11 @@ The plugin gives both agents the same workflow:
 - preserve manual edits when the agent revises the content;
 - import an existing PowerPoint file into an editable `.deck`;
 - validate, lint, render, and inspect every changed slide;
+- generate images and use premium template packs;
+- host and share presentations with Decktype Cloud;
 - deliver an editable `.deck`, with an optional PDF or PowerPoint export.
+
+The plugin ships the complete Decktype agent skill and follows every Decktype app release: the plugin version matches the app version. The skill directory is generated from the app's source repository; do not edit `plugins/decktype/skills/decktype/` here. Make skill corrections in [`skills/decktype/` in Tontoon7/decktype](https://github.com/Tontoon7/decktype/tree/main/skills/decktype).
 
 ## Who it is for
 
@@ -103,13 +107,13 @@ The repository includes a real four-slide presentation built with the standard t
 
 ## What is public
 
-This repository contains only the agent workflow, plugin manifests, references, tests, and example assets. The Decktype application source is not part of the plugin.
+This repository contains the generated agent skill, plugin manifests, tests, and example assets. The Decktype application source is not part of the plugin.
 
-The plugin does not add hooks, background services, an MCP server, or bundled executables. It calls the local `deck` CLI installed through Decktype and works on files the user places in scope. It cites only public `deck` commands, listed in [tests/fixtures/deck-cli-1.3.2.json](tests/fixtures/deck-cli-1.3.2.json).
+The plugin does not add hooks, background services, an MCP server, or bundled executables. It calls the local `deck` CLI installed through Decktype and works on files the user places in scope. The release tests check commands cited in this repository's maintained documentation against [tests/fixtures/deck-cli-1.3.2.json](tests/fixtures/deck-cli-1.3.2.json); the generated skill follows the matching app release.
 
 ## Compatibility
 
-Tested with the `deck` CLI 1.3.2 shipped with Decktype 1.3.2. PDF export needs `deck` 1.3.2 or newer: update Decktype and choose **Connect an agent** again if `deck pdf --help` fails.
+The plugin version matches the Decktype app release it follows. The current repository validation uses `deck` CLI 1.3.2; PDF export needs `deck` 1.3.2 or newer. Update Decktype and choose **Connect an agent** again if `deck pdf --help` fails.
 
 ## Validate the repository
 
@@ -119,7 +123,7 @@ claude plugin validate --strict plugins/decktype
 claude plugin validate --strict .
 ```
 
-The release tests check that every cited `deck` command and option exists in the published CLI, and validate the example bundle with the installed `deck` CLI.
+The release tests check that every cited `deck` command and option in maintained repository documentation exists in the published CLI, and validate the example bundle with the installed `deck` CLI. They also check generated skill commands, versions, and privacy markers.
 
 ## Learn more
 
