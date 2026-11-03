@@ -1,0 +1,22 @@
+{
+  "name": "decktype-connector",
+  "version": "0.1.0",
+  "description": "Create and revise editable presentations with Decktype.",
+  "homepage": "https://decktype.com/en/connectors",
+  "repository": "https://github.com/Tontoon7/decktype-agent",
+  "license": "MIT",
+  "keywords": ["presentations", "slides", "decktype"],
+  "interface": {
+    "displayName": "Decktype",
+    "shortDescription": "Create and revise editable presentations with Decktype.",
+    "longDescription": "Create presentations from supplied facts, find private decks, revise content, preview slides, and open the editor through your connected Decktype account.",
+    "developerName": "Decktype",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "websiteURL": "https://decktype.com",
+    "privacyPolicyURL": "https://decktype.com/en/privacy",
+    "termsOfServiceURL": "https://decktype.com/en/terms",
+    "defaultPrompt": ["Create a presentation from these facts.", "Update this presentation while preserving my edits."],
+    "brandColor": "#191713"
+  }
+}

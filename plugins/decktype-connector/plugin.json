@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "decktype-connector",
+  "version": "0.1.0",
+  "description": "Create and revise editable presentations with Decktype.",
+  "repository": "https://github.com/Tontoon7/decktype-agent",
+  "license": "MIT",
+  "keywords": ["presentations", "slides", "decktype"]
+}
