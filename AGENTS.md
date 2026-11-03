@@ -2,7 +2,7 @@
 
 ## Produit
 
-Public plugin (MIT) that teaches Claude Code and Codex to build, revise, render, and export editable Decktype presentations through the local `deck` CLI installed by the Decktype app (Apple silicon Mac, macOS 11+). One plugin, two marketplaces: Claude Code (`.claude-plugin/marketplace.json`) and Codex (`.agents/plugins/marketplace.json`). No hooks, MCP server, or bundled executable.
+Public local plugin (MIT) that teaches Claude Code and Codex to build, revise, render, and export editable Decktype presentations through the local `deck` CLI installed by the Decktype app (Apple silicon Mac, macOS 11+). This plugin serves two marketplaces: Claude Code (`.claude-plugin/marketplace.json`) and Codex (`.agents/plugins/marketplace.json`), without hooks, MCP server, or bundled executable. A separate `decktype-connector` package prepares the remote MCP connector for the shared ChatGPT/Codex directory without the Mac app; official submission validation is pending.
 
 ## Carte du code
 
@@ -12,12 +12,17 @@ Public plugin (MIT) that teaches Claude Code and Codex to build, revise, render,
 - `plugins/decktype/skills/decktype/` — generated copy of the complete Decktype agent skill shipped with the app. Never edit this directory by hand; make corrections in `skills/decktype/` in `Tontoon7/decktype`.
 - `plugins/decktype/examples/` — example `.deck` and its four rendered slides.
 - `docs/directory-submission.md` — English and French texts for the plugin directories.
+- `plugins/decktype-connector/` — separate remote connector preparation, root/Codex manifests, MCP configurations, copied brand icons, and explicit submission limitations. Never add it to either marketplace.
+- `scripts/build_openai_submission.py`, `tests/test_openai_submission.py` — deterministic ZIP builder and local safety/content contracts, Python 3.9+, standard library only.
+- `docs/openai-submission.md` — English remote connector listing, shared web/mobile review matrix, provenance, and official validation status.
 - `tests/test_release.py` — release contract; `tests/fixtures/deck-cli-1.3.2.json` — public commands and options of the published `deck` CLI.
 
 ## Commandes
 
 ```sh
 python3 -m unittest discover -s tests          # release tests (needs `deck` on PATH)
+python3 -m unittest discover -s tests -p 'test_openai_submission.py' # no app required
+python3 scripts/build_openai_submission.py --output /path/to/decktype-connector.zip
 claude plugin validate --strict plugins/decktype
 claude plugin validate --strict .
 # Isolated install test, without touching the real configuration:
@@ -32,8 +37,9 @@ CODEX_HOME="$TMPDIR/codex-home" codex plugin list
 
 ## Conventions
 
-- On every app release, the plugin version matches the Decktype app version: root and entry `version` of `.claude-plugin/marketplace.json`, plus both `plugin.json` files. Tests validate the shared `X.Y.Z` value without fixing it.
-- The marketplace entry and the Claude `plugin.json` share the same description; all manifests share the same keywords.
+- On every app release, the local plugin version matches the Decktype app version: root and entry `version` of `.claude-plugin/marketplace.json`, plus both local `plugin.json` files. Tests validate the shared `X.Y.Z` value without fixing it. The connector has its own version, initially `0.1.0`, shared by its two manifests.
+- The marketplace entry and the Claude `plugin.json` share the same description; all local manifests share the same keywords.
+- Connector builds use an explicit file list, fixed ZIP metadata, no executable files, hooks, server headers or credentials, one remote server per configuration, and commerce-free listing text. Output must be a new file outside the plugin source; the local validator is not an official schema validator. Never guess unverified OpenAI extension keys.
 - Keep maintained repository documentation's `deck` commands and options aligned with `tests/fixtures/deck-cli-*.json`, sourced from `deck --help` and `deck <command> --help` of the published CLI; mark a command newer than the oldest supported CLI with `"requires"`. The generated skill follows the matching app release and is checked for required commands and privacy markers, not against the historical fixture.
 - The generated skill may describe the complete app, including Decktype Cloud, image generation, premium packs, and its public format guidance. Keep descriptions factual and derived from Decktype's published skill.
 - Prices and platforms must match decktype.com (pricing and download pages); the website is the reference.
@@ -41,7 +47,7 @@ CODEX_HOME="$TMPDIR/codex-home" codex plugin list
 
 ## Livraison
 
-Changes go through a reviewed pull request. A version tag on this public repository is a release: it is created by the maintainer after the merge, never by an agent or in a pull request. Directory submissions are made by the maintainer from `docs/directory-submission.md`.
+Changes go through a reviewed pull request. A version tag on this public repository is a release: it is created by the maintainer after the merge, never by an agent or in a pull request. Directory submissions are made by the maintainer from `docs/directory-submission.md` (local plugin) or `docs/openai-submission.md` (connector, after official validation).
 
 ## Travail dans l'usine
 
@@ -49,6 +55,7 @@ Do not commit, push, tag, or publish. Run the release tests and both `claude plu
 
 ## Pièges connus
 
+- OpenAI does not accept adding MCP to a plugin already submitted without it: keep `plugins/decktype-connector` distinct from the local plugin and out of both marketplaces. `SUBMISSION-NOTES.md` records unverified OAuth/commerce/icon fields; a successful local ZIP build does not resolve them.
 - The `deck` on a machine's `PATH` can be older than the published CLI; check `deck --version`. The published CLI ships inside the app at `/Applications/Decktype.app/Contents/Resources/agent-tools/bin/deck.zip` (unzip into `$TMPDIR` and put it first on `PATH` to test against it).
 - The app installs the CLI in `~/Library/Application Support/Decktype/bin` and does not add it to `PATH`; the skill exports it first.
 - `deck export` exits with status 3 and writes nothing without a signed-in Pro or Autonomous plan: never use it as test evidence. `deck pdf` (1.3.2+) works without an account.

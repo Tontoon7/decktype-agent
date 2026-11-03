@@ -109,11 +109,29 @@ The repository includes a real four-slide presentation built with the standard t
 
 This repository contains the generated agent skill, plugin manifests, tests, and example assets. The Decktype application source is not part of the plugin.
 
-The plugin does not add hooks, background services, an MCP server, or bundled executables. It calls the local `deck` CLI installed through Decktype and works on files the user places in scope. The release tests check commands cited in this repository's maintained documentation against [tests/fixtures/deck-cli-1.3.2.json](tests/fixtures/deck-cli-1.3.2.json); the generated skill follows the matching app release.
+The local `plugins/decktype` plugin does not add hooks, background services, an MCP server, or bundled executables. It calls the local `deck` CLI installed through Decktype and works on files the user places in scope. The release tests check commands cited in this repository's maintained documentation against [tests/fixtures/deck-cli-1.3.2.json](tests/fixtures/deck-cli-1.3.2.json); the generated skill follows the matching app release.
 
 ## Compatibility
 
 The plugin version matches the Decktype app release it follows. The current repository validation uses `deck` CLI 1.3.2; PDF export needs `deck` 1.3.2 or newer. Update Decktype and choose **Connect an agent** again if `deck pdf --help` fails.
+
+## Remote connector preparation for OpenAI
+
+`plugins/decktype-connector/` is a separate package for the remote Decktype MCP
+connector, targeting the shared ChatGPT and Codex directory. It is kept out of
+both marketplaces above. Building it requires Python 3.9 or newer and no Mac app:
+
+```sh
+python3 scripts/build_openai_submission.py --output /path/to/decktype-connector.zip
+python3 -m unittest discover -s tests -p 'test_openai_submission.py'
+```
+
+Choose a new output file outside the plugin directory. The archive is
+deterministic and contains only the explicitly allowed files. See the
+[submission dossier](docs/openai-submission.md) for listing text, review cases,
+brand provenance, and validation evidence. Official schema validation is pending;
+the authentication extension, commerce declaration format, and icon references
+must be confirmed before submission. This preparation does not submit the package.
 
 ## Validate the repository
 
