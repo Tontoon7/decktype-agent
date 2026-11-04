@@ -181,8 +181,8 @@ class ReleaseContractTests(unittest.TestCase):
         self.assertGreater(live_checked, 0)
 
     def test_example_bundle_is_valid_and_public(self):
-        _, plugin = self.paths()
-        deck_path = plugin / "examples" / "agent-workflow.deck"
+        root, plugin = self.paths()
+        deck_path = root / "examples" / "agent-workflow.deck"
         self.assertTrue(deck_path.is_file(), "example .deck is missing")
         self.assertIsNotNone(shutil.which("deck"), "deck CLI is required for release validation")
 

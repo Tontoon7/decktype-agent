@@ -10,7 +10,8 @@ Public local plugin (MIT) that teaches Claude Code and Codex to build, revise, r
 - `.agents/plugins/marketplace.json` — Codex marketplace pointing at the same plugin folder.
 - `plugins/decktype/.claude-plugin/plugin.json`, `plugins/decktype/.codex-plugin/plugin.json` — plugin manifests.
 - `plugins/decktype/skills/decktype/` — generated copy of the complete Decktype agent skill shipped with the app. Never edit this directory by hand; make corrections in `skills/decktype/` in `Tontoon7/decktype`.
-- `plugins/decktype/examples/` — example `.deck` and its four rendered slides.
+- `plugins/decktype/examples/` — four rendered slides of the example; `examples/agent-workflow.deck` at the repository root is its editable source, kept outside the plugin folder because the Claude directory holds every version that ships a binary file for a reviewer.
+- `plugins/decktype/.claude-plugin/icon.png` — listing icon, read once by the Claude directory when the plugin is first saved.
 - `docs/directory-submission.md` — English and French texts for the plugin directories.
 - `plugins/decktype-connector/` — separate remote connector preparation, root/Codex manifests, MCP configurations, copied brand icons, and explicit submission limitations. Never add it to either marketplace.
 - `scripts/build_openai_submission.py`, `tests/test_openai_submission.py` — deterministic ZIP builder and local safety/content contracts, Python 3.9+, standard library only.
