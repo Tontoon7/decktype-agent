@@ -99,7 +99,7 @@ then export it to PDF for the board.
 
 The repository includes a real four-slide presentation built with the standard template pack:
 
-- [Open or download the editable `.deck`](plugins/decktype/examples/agent-workflow.deck)
+- [Open or download the editable `.deck`](examples/agent-workflow.deck)
 - [Title](plugins/decktype/examples/slide-01.png)
 - [Thesis](plugins/decktype/examples/slide-02.png)
 - [Workflow](plugins/decktype/examples/slide-03.png)
