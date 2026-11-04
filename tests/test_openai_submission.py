@@ -47,9 +47,12 @@ class SubmissionTests(unittest.TestCase):
                 self.assertEqual(archive.comment, b"")
 
     def test_remote_contract_and_brand(self):
-        for name in ("mcp.json", ".mcp.json"):
-            self.assertEqual(json.loads((PLUGIN / name).read_text()), {
-                "mcpServers": {"decktype": {"type": "http", "url": "https://api.decktype.com/mcp"}}})
+        agent = json.loads((PLUGIN / "mcp.json").read_text())["mcpServers"]["decktype"]
+        self.assertEqual((agent["type"], agent["url"]), ("streamable-http", "https://api.decktype.com/mcp"))
+        self.assertEqual(agent["extensions"]["com.openai"]["auth"], {
+            "type": "oauth", "client": {"mode": "dcr"}, "baseScopes": ["decks:read", "decks:write"]})
+        self.assertEqual(json.loads((PLUGIN / ".mcp.json").read_text()), {
+            "mcpServers": {"decktype": {"url": "https://api.decktype.com/mcp"}}})
         manifest = json.loads((PLUGIN / ".codex-plugin/plugin.json").read_text())
         self.assertEqual((manifest["name"], manifest["version"]), ("decktype-connector", "0.1.0"))
         self.assertEqual(manifest["interface"]["brandColor"], "#191713")
@@ -64,8 +67,9 @@ class SubmissionTests(unittest.TestCase):
     def test_rejects_unsafe_inputs_before_creating_archive(self):
         mutations = [
             ("mcp.json", lambda p: p.write_text('{"mcpServers":{"a":{},"b":{}}}')),
-            (".mcp.json", lambda p: p.write_text(p.read_text().replace('"type":', '"headers": {}, "type":'))),
-            (".mcp.json", lambda p: p.write_text(p.read_text().replace('"http"', '"stdio"'))),
+            (".mcp.json", lambda p: p.write_text(p.read_text().replace('"url":', '"headers": {}, "url":'))),
+            ("mcp.json", lambda p: p.write_text(p.read_text().replace('"streamable-http"', '"stdio"'))),
+            ("mcp.json", lambda p: p.write_text(p.read_text().replace('"dcr"', '"provided"'))),
             ("mcp.json", lambda p: p.write_text(p.read_text().replace('https://api.', 'http://api.'))),
             ("mcp.json", lambda p: p.write_text(p.read_text().replace('"type":', '"url":"https://other.invalid", "type":'))),
             ("plugin.json", lambda p: p.write_text(p.read_text().replace('"name":', '"hooks": {}, "name":'))),
