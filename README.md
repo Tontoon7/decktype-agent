@@ -143,6 +143,18 @@ claude plugin validate --strict .
 
 The release tests check that every cited `deck` command and option in maintained repository documentation exists in the published CLI, and validate the example bundle with the installed `deck` CLI. They also check generated skill commands, versions, and privacy markers.
 
+## Data and privacy
+
+The plugin adds no hooks, no background service, no MCP server and no bundled executable. Its skill has your agent run the local `deck` CLI, installed by the Decktype app, on the files you place in the agent's scope. Your agent handles those files under its own provider's terms.
+
+Beyond that, content leaves your Mac only when you sign in and use a Decktype Cloud feature:
+
+- hosting, sharing and version history send the `.deck` bundle to Decktype Cloud, which keeps it until you delete it;
+- image generation sends the prompt, settings and, for an edit, the source image to Decktype Cloud, which passes them to OpenAI;
+- theme generation may send a website URL, captures, images and instructions to Decktype Cloud, which processes them with Anthropic.
+
+The [privacy policy](https://decktype.com/en/privacy) has the full details.
+
 ## Learn more
 
 - [Decktype for AI agents](https://decktype.com/en/agents?utm_source=github&utm_medium=plugin&utm_campaign=claude_code_plugin_launch): connect Claude Code or Codex, and what to do if the CLI is not detected.
