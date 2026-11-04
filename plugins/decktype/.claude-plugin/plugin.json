@@ -1,7 +1,7 @@
 {
   "name": "decktype",
   "displayName": "Decktype",
-  "version": "1.1.0",
+  "version": "1.4.2",
   "description": "Create, revise, render, and export editable Decktype presentations with Claude Code: PDF on every plan, PowerPoint on Pro and Autonomous plans. Requires the Decktype app on an Apple silicon Mac.",
   "author": {
     "name": "Decktype",
