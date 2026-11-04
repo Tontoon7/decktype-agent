@@ -10,6 +10,22 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+MCP_URL = "https://api.decktype.com/mcp"
+MCP_CONFIGS = {
+    "mcp.json": {
+        "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+        "mcpServers": {"decktype": {
+            "type": "streamable-http",
+            "url": MCP_URL,
+            "extensions": {"com.openai": {"auth": {
+                "type": "oauth",
+                "client": {"mode": "dcr"},
+                "baseScopes": ["decks:read", "decks:write"],
+            }}},
+        }},
+    },
+    ".mcp.json": {"mcpServers": {"decktype": {"url": MCP_URL}}},
+}
 FILES = (".codex-plugin/plugin.json", ".mcp.json", "SUBMISSION-NOTES.md",
          "assets/icon-dark.png", "assets/icon.png", "mcp.json", "plugin.json")
 COMMERCIAL = re.compile(
@@ -99,10 +115,9 @@ def validate(source, document):
     contents = {name: (source / name).read_bytes() for name in FILES}
     for name, content in contents.items():
         require(not SECRETS.search(content.decode("utf-8", errors="replace")), f"secret or private path in {name}")
-    for name in ("mcp.json", ".mcp.json"):
+    for name, expected in MCP_CONFIGS.items():
         config = json.loads(contents[name], object_pairs_hook=object_without_duplicates)
-        require(config == {"mcpServers": {"decktype": {"type": "http", "url": "https://api.decktype.com/mcp"}}},
-                f"{name}: expected one remote server without headers or credentials")
+        require(config == expected, f"{name}: expected one remote server without headers or credentials")
     for name in ("plugin.json", ".codex-plugin/plugin.json"):
         data = json.loads(contents[name], object_pairs_hook=object_without_duplicates)
         validate_manifest(data, name)

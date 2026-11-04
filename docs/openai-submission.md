@@ -61,7 +61,9 @@ never overwritten. It does not connect to Decktype, authenticate, or submit anyt
 The remote service is `https://api.decktype.com/mcp`, using Streamable HTTP.
 OAuth discovery is
 `https://api.decktype.com/.well-known/oauth-protected-resource/mcp`.
-The service supports dynamic registration and requires PKCE S256. Read and
+`mcp.json` selects dynamic registration, which the service supports with PKCE
+S256; a real ChatGPT connection succeeded this way on 2026-11-04, while ChatGPT's
+published client (CIMD) is refused by the server. Read and
 write operations need `decks:read` and `decks:write` respectively; neither
 scope implies the other. No token, client secret, or server headers belong in
 the package. No commerce is provided by this connector.
@@ -85,9 +87,10 @@ attach its validation log before calling the package submission-ready.
 The official Codex 0.159.0 binary identifies the root `plugin.json` and schema
 https://agent-plugins.org/schemas/1.0.0/plugin.schema.json; this environment
 blocks that schema domain. `SUBMISSION-NOTES.md` in the ZIP declares no commerce
-and the OAuth contract in plain text. The unverified machine-readable
-`extensions["com.openai"].auth`, no-commerce field, and icon references are
-deliberately omitted. Confirm those fields and both MCP envelopes against the
+and the OAuth contract in plain text. Both MCP envelopes and
+`extensions["com.openai"].auth` follow the official pages read on 2026-11-04
+(`/plugins/deploy/submission`, `/plugins/build/plugins`). The machine-readable
+no-commerce field and icon references remain omitted. Confirm them against the
 official schema before portal upload; no extension shape has been guessed here.
 
 The connector contract comes from `Tontoon7/decktype-cloud`,

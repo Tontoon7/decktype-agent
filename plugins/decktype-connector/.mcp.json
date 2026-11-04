@@ -1,7 +1,6 @@
 {
   "mcpServers": {
     "decktype": {
-      "type": "http",
       "url": "https://api.decktype.com/mcp"
     }
   }
