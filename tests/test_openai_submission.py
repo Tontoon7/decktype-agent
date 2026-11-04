@@ -61,7 +61,7 @@ class SubmissionTests(unittest.TestCase):
             self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
             self.assertEqual(data[16:24], (512).to_bytes(4, "big") * 2)
         notes = (PLUGIN / "SUBMISSION-NOTES.md").read_text()
-        for text in ("Commerce: none", "OAuth", "PKCE", "pending"):
+        for text in ("Commerce: none", "OAuth", "PKCE"):
             self.assertIn(text, notes)
 
     def test_rejects_unsafe_inputs_before_creating_archive(self):

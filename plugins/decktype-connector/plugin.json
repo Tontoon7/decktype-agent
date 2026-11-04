@@ -3,6 +3,10 @@
   "name": "decktype-connector",
   "version": "0.1.0",
   "description": "Create and revise editable presentations with Decktype.",
+  "author": {
+    "name": "Kairia",
+    "url": "https://decktype.com"
+  },
   "repository": "https://github.com/Tontoon7/decktype-agent",
   "license": "MIT",
   "keywords": ["presentations", "slides", "decktype"]

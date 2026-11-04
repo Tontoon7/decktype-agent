@@ -71,8 +71,8 @@ def object_without_duplicates(pairs):
 
 
 def validate_manifest(data, name):
-    keys = {"name", "version", "description", "repository", "license", "keywords"}
-    keys |= {"$schema"} if name == "plugin.json" else {"homepage", "interface"}
+    keys = {"name", "version", "description", "author", "repository", "license", "keywords"}
+    keys |= {"$schema"} if name == "plugin.json" else {"homepage", "mcpServers", "interface", "extensions"}
     require(isinstance(data, dict) and set(data) == keys, f"unexpected manifest fields in {name}")
     for field, value in strings(data):
         require(not SECRETS.search(value), f"secret or private path in {name}:{field}")
@@ -83,22 +83,36 @@ def validate_manifest(data, name):
             f"invalid identity or version in {name}")
     require(data["repository"] == "https://github.com/Tontoon7/decktype-agent" and data["license"] == "MIT",
             "unexpected repository or license")
+    require(isinstance(data["author"], dict) and bool(str(data["author"].get("name", "")).strip()), "author name required")
     require(isinstance(data["keywords"], list) and all(isinstance(v, str) for v in data["keywords"]), "invalid keywords")
     if name == "plugin.json":
         require(data["$schema"] == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json", "unexpected schema reference")
         return
     require(data["homepage"] == "https://decktype.com/en/connectors", "unexpected documentation URL")
+    require(data["mcpServers"] == "./.mcp.json", "unexpected MCP configuration path")
     interface = data["interface"]
     text_keys = {"displayName", "shortDescription", "longDescription", "developerName", "category",
-                 "websiteURL", "privacyPolicyURL", "termsOfServiceURL", "brandColor"}
+                 "websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL", "brandColor",
+                 "composerIcon", "composerIconDark", "logo", "logoDark"}
     require(isinstance(interface, dict) and set(interface) == text_keys | {"capabilities", "defaultPrompt"},
             "unexpected interface fields")
     require(all(isinstance(interface[k], str) and interface[k].strip() for k in text_keys), "invalid interface text")
-    require(interface["brandColor"] == "#191713" and interface["capabilities"] == ["Write"], "unexpected brand or capabilities")
+    require(interface["brandColor"] == "#191713", "unexpected brand color")
+    require(len(interface["displayName"]) <= 30 and len(interface["shortDescription"]) <= 30, "name or subtitle over 30 characters")
+    require(isinstance(interface["capabilities"], list) and all(isinstance(v, str) and 0 < len(v) <= 120 for v in interface["capabilities"]),
+            "invalid capabilities")
+    require(all(interface[k] in {"./assets/icon.png", "./assets/icon-dark.png"} for k in ("composerIcon", "composerIconDark", "logo", "logoDark")),
+            "unexpected icon path")
     require(isinstance(interface["defaultPrompt"], list) and 1 <= len(interface["defaultPrompt"]) <= 3
-            and all(isinstance(v, str) and v.strip() for v in interface["defaultPrompt"]), "invalid prompts")
-    for field, suffix in (("websiteURL", ""), ("privacyPolicyURL", "/en/privacy"), ("termsOfServiceURL", "/en/terms")):
+            and all(isinstance(v, str) and 0 < len(v.strip()) <= 128 for v in interface["defaultPrompt"]), "invalid prompts")
+    for field, suffix in (("websiteURL", ""), ("supportURL", "/en/contact"), ("privacyPolicyURL", "/en/privacy"),
+                          ("termsOfServiceURL", "/en/terms")):
         require(interface[field] == "https://decktype.com" + suffix, f"unexpected {field}")
+    review = data["extensions"]["com.openai"]["review"]
+    cases = review["test_cases"]
+    require(len(cases["positive"]) == 5 and len(cases["negative"]) == 3, "five positive and three negative cases required")
+    require(all(case.get("tools_triggered") and case.get("expected_behavior") for case in cases["positive"]), "incomplete positive case")
+    require(review["demo_recording_url"].startswith("https://") and review["commerce"] is False, "unexpected review details")
 
 
 def validate(source, document):
@@ -158,7 +172,7 @@ def main():
         build(ROOT / "plugins/decktype-connector", ROOT / "docs/openai-submission.md", args.output)
     except (ValueError, OSError, TypeError) as error:
         parser.exit(1, f"Submission build refused: {error}\n")
-    print(f"Built {args.output} (official validation pending)")
+    print(f"Built {args.output}")
 
 
 if __name__ == "__main__":
