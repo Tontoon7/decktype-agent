@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- macOS Big Sur grid: 824x824 tile centered on 1024 (100px padding), corner ~187 -->
+  <g transform="translate(100,100) scale(12.48485)">
+    <rect width="66" height="66" rx="15" fill="#141210"/>
+    <g transform="translate(1,2)">
+      <rect x="12" y="13" width="33" height="26" rx="7" fill="none" stroke="#F4F1EA" stroke-width="3" opacity="0.42"/>
+      <rect x="19" y="23" width="33" height="26" rx="7" fill="#F4F1EA"/>
+      <rect x="26" y="34" width="19" height="3.6" rx="1.8" fill="#B26A12"/>
+    </g>
+  </g>
+</svg>
