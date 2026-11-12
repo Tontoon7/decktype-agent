@@ -97,7 +97,11 @@ deck theme scaffold --evidence evidence.json --id client --name Client --logo lo
 Analysis prefers visible styles in slides, layouts and masters over Office
 values. The scaffold applies their metrics, logos and banners to the fifteen
 bases. `--logo` is optional: it replaces the logo at the observed frame;
-otherwise a top-right frame is reported. `--install` requires `--package`;
+otherwise a top-right frame is reported. Optional `--background-image background.jpg`
+(PNG or JPEG) declares a `background` asset and sets `style.background_image`
+to `cover`. Activation embeds it in the deck, rejecting conflicting bytes at
+the same path without writing. New slides copy this background; existing
+slides stay unchanged. `--install` requires `--package`;
 preview creation requires the GPU. If it fails, the report names the retained
 draft without installing it. Inspect all fifteen package previews.
 These bases are ready: do not write or copy templates by hand to compose the

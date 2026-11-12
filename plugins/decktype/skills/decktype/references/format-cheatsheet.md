@@ -1,4 +1,4 @@
-# `.deck` format cheatsheet (0.32.0)
+# `.deck` format cheatsheet (0.35.0)
 
 Minimal copyable schemas. The title version is the mandatory reference for the entire skill: `capabilities.format_version` must be at least this version before using these recipes. The minimal `deck.json` example carries this version; other document examples do not exceed it. Template file versions are separate, and feature introduction versions remain historical.
 
@@ -89,7 +89,7 @@ Element `id` values on a bound slide are set by `deck regenerate`: do not write 
 
 ```json
 {
-  "format_version": "0.32.0",
+  "format_version": "0.35.0",
   "id": "01KWJ0HRS9B4PS1PD2R50G3PG3",
   "title": "Essai",
   "language": "fr",
@@ -128,8 +128,8 @@ Element `id` values on a bound slide are set by `deck regenerate`: do not write 
 
 ## Template-bound slide (write this yourself)
 
-The exact shape to insert into `slides`: filled binding, empty `elements`, `background`
-and theme IDs copied from the deck. `deck regenerate` materializes the elements.
+The exact shape to insert into `slides`: filled binding, empty `elements`, `background`,
+optional `background_image` (0.35.0), and active theme IDs. `deck regenerate` materializes the elements.
 
 ```json
 {
@@ -211,11 +211,11 @@ element identified by its key (`titre`, `cartes[1].fond`...). Two forms:
 | `bleed` | all | boolean, intentional bleed (0.25.0: the ONLY way to mark a bound element); see [intentional bleed](bleed.md) |
 | `content` | text | string (only an element NOT bound to a slot) |
 | `runs` | text | COMPLETE TextRun[] (0.27.0): explicit literal text and attributes, slots masked; absent attributes inherited from the block, whose color and font can follow the theme; `content` = their text unless overridden by `content`; for a fixed template segment, edit a slot-fed segment in its slot |
-| `font_family` | text | string |
-| `font_size` | text | number |
+| `font_family`, `font_size` | text | string, number |
 | `weight` | text | "light", "regular", "medium", "semibold", "bold" |
 | `align` | text | "left", "center", "right" |
 | `justify` | text | boolean, default false (0.19.0); see [alignment](text-alignment.md) for the atomic patch and older-reader fallback |
+| `italic`, `underline`, `tracking`, `line_height`, `valign`, `highlight`, `paragraphs` | text | 0.34.0, literal, in slide points, never scaled by the template: booleans for the first two; `tracking` number or null; `line_height` number > 0 (multiple of `font_size`) or null; `valign` "top", "center", "bottom"; `highlight` literal Color (no `$colors.*` token) or null; `paragraphs` COMPLETE TextParagraph[], clamped, inert if an entry is not an object. Explicit run values win over the block's italic, underline and highlight; see [text formatting](text-formatting.md) |
 | `color` | text, icon | Color |
 | `fill` | shape | Color or null |
 | `fill_gradient` | shape | complete Gradient object, or null to remove the gradient (0.23.0); see [template gradients](gradient-overrides.md), independent of `fill` |
@@ -224,6 +224,8 @@ element identified by its key (`titre`, `cartes[1].fond`...). Two forms:
 | `shadow` | shape | `{"color": Color, "blur": f64, "dx": f64, "dy": f64}` or null (drop shadow; shadow opacity is the alpha of `color`) |
 | `path` | shape | `{"commands": [...]}` box-normalized 0..1 (0.18.0): replaces a template `path`'s geometry, the only way to straighten a misoriented connector (`transform` supports neither mirroring nor negative scaling); never null |
 | `stroke_dash` | shape | `[on, off]` in points, or null for a solid stroke (0.18.0) |
+| `marker_start` | shape | Marker `{"kind", "scale"}`, or null to remove the template head (0.33.0) |
+| `marker_end` | shape | Marker `{"kind", "scale"}`, or null to remove the template head (0.33.0) |
 | `link` | text, shape, image | URL `http://`, `https://`, `mailto:`, or `null` to remove the link (0.29.0) |
 | `asset`, `fit`, `crop`, `mask` | image | asset: string `assets/...`; since 0.25.0: fit `cover`/`contain`/`fill`, crop Rect normalized to 0..1 (positive size) or null, mask `circle`/`none` |
 | `name` | icon | string, registry name (0.18.0) |
@@ -249,13 +251,8 @@ For a `line`: a `transform` override at full precision (rounding moves the ends)
 
 For an old two-point `path`: `transform` = segment bounding box (rotation 0,
 `w`/`h` floored at 8), plus `path` placing the ends in `0..1`. From (1500, 900) to (975, 845):
-
-```json
-{"key": "conn2", "prop": "transform",
- "value": {"x": 975.0, "y": 845.0, "w": 525.0, "h": 55.0, "rotation": 0.0}},
-{"key": "conn2", "prop": "path", "value": {"commands": [
-  {"op": "move_to", "x": 1.0, "y": 1.0}, {"op": "line_to", "x": 0.0, "y": 0.0}]}}
-```
+`{"key": "conn2", "prop": "transform", "value": {"x": 975.0, "y": 845.0, "w": 525.0, "h": 55.0, "rotation": 0.0}}`, then
+`{"key": "conn2", "prop": "path", "value": {"commands": [{"op": "move_to", "x": 1.0, "y": 1.0}, {"op": "line_to", "x": 0.0, "y": 0.0}]}}`.
 
 ## Free slides and free elements
 
@@ -280,7 +277,7 @@ is also free: regeneration never touches it.
 }
 ```
 
-The seven `kind` values: `text` (above), `shape`, `image` and `icon` (below; names
+The seven `kind` values: `text` (above; underline, highlight, lists, paragraph spacing: [text formatting](text-formatting.md), 0.34.0), `shape`, `image` and `icon` (below; names
 and placement rules in `icons.md`), `chart` and `table` (next sections), `decor` (contract 4.5):
 
 ```json
@@ -299,7 +296,7 @@ and placement rules in `icons.md`), `chart` and `table` (next sections), `decor`
 ```
 
 `shape` accepts `rectangle`, `ellipse`, `line`, `triangle` (isosceles, pointing up),
-`arrow` (right-pointing arrow, shaft + head filling the box) and `star` (five-pointed
+`arrow` (right-pointing filled pictogram filling the box, never a pointer) and `star` (five-pointed
 star inscribed in the box). An unknown tag is never an error: it is
 preserved unchanged and rendered as a neutral placeholder (dashed box).
 The `elements` array order is the painting order (first is underneath).
@@ -311,12 +308,15 @@ slide points, never a length and angle.
 {"type": "shape", "shape": "line",
  "from": {"x": 200.0, "y": 300.0},
  "to": {"x": 900.0, "y": 700.0},
- "stroke": {"color": {"r": 24, "g": 27, "b": 41, "a": 255}, "width": 3.0}}
+ "stroke": {"color": {"r": 24, "g": 27, "b": 41, "a": 255}, "width": 3.0},
+ "marker_end": {"kind": "arrow"}}
 ```
 
 The two points are authoritative: `transform` is recalculated from them on open,
 so any plausible box suffices (the segment bounding box is the obvious choice). They come as a pair: `from` without `to` is ignored and `deck validate`
 reports it. Height `h` remains the editor's grab band, with no effect on the stroke.
+Arrowheads (0.33.0, `line` and open `path` ends): `marker_start` (`from` end), `marker_end` (`to` end), `{"kind", "scale"}`, kind `arrow`/`open`/`dot`,
+`scale` default 1, relative to the stroke width, clamped to 0.25..4. To designate a point, a `line` + `marker_end`; never `shape: arrow` (a filled pictogram). Template heads, `null` overrides and PPTX sizes: [template connectors](template-connectors.md), section 6.
 Dashes `stroke_dash` `[on, off]` (`line`, `path`): each dash gains a round cap of half the stroke width on either side, so `[0, 2*epaisseur]` gives round dots and `[epaisseur, epaisseur]` touching dashes (identical in rendering and PPTX).
 
 A shape accepts an optional `"shadow"` field (drop shadow, format 0.13.0): `{"color": {"r": 0, "g": 0, "b": 0, "a": 64},
@@ -448,8 +448,8 @@ Each `style` has 4 color roles (`background`, `surface`, `text`, `accent`), 3 fo
 (`display`, `body`, `mono`) and, in 0.30.0, `colors.extra`: at most 8 `{"name", "color"}` entries, read with `$colors.extra.<name>`
 (accent fallback and warning if missing). Editing the active revision's style then regenerating recolors only slides bound to that exact revision.
 
-Also change `slides[].background.color`: slide backgrounds are not re-derived from
-the theme by regeneration (only elements are).
+Image background (0.35.0): `style.background_image` = `{"asset":"assets/background.jpg","fit":"cover","opacity":0.8,"overlay":{"r":0,"g":0,"b":0,"a":90}}` (`fit` cover|contain|fill, default cover; opacity defaults to 1; optional color overlay). A new slide copies `style.colors.background` and `style.background_image` from the active revision into `background.color` and `background_image`. The color stays beneath the image; never add an image element.
+For existing slides, change `slides[].background.color` and set or remove `slides[].background_image` (embed the asset with `deck image add`). Regeneration and theme activation never re-derive slide backgrounds.
 
 ## `deck validate` diagnostics
 

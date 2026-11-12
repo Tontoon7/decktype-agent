@@ -9,14 +9,14 @@ alternate background/text roles: choose a contrasting pair and inspect the resul
 Pack `standard`: 10 templates embedded in the `deck` binary (template files use
 `format_version` 0.2.0, `graphique` 0.14.0, `tableau` 0.15.0). The reference deck
 format version is the title of [format-cheatsheet.md](format-cheatsheet.md),
-separate from template file versions.
+separate from template file versions. Schema 0.19.0 adds text `underline`, `highlight`, `paragraphs` ([text-formatting.md](text-formatting.md)).
 
 Slot tables and ready-to-fill bindings in this file are generated from
 `deck templates list --json` and `deck templates show standard/<id> --json`,
 then enriched with usage, appearance and advice. Generation uses an empty,
-isolated profile and verifies the 10 `standard` and 25 `premium` templates
-against the shipped assets. Every embedded result has `source: "standard"`,
-including the premium pack. Never generate this catalogue from a user library.
+isolated profile and verifies the 10 `standard`, 25 `premium` and 1 `a4`
+templates against the shipped assets. Every embedded result has `source: "standard"`,
+including the premium and a4 packs. Never generate this catalogue from a user library.
 When in doubt or after a binary update, CLI output is authoritative: rerun
 these commands rather than trusting this file.
 
@@ -37,7 +37,7 @@ and `deck check` measure actual overflows; also inspect the PNG before delivery.
 
 ## Revisioned themes and provenance
 
-This catalogue describes shipped packs `standard` and `premium`. A complete
+This catalogue describes shipped packs `standard`, `premium` and `a4`. A complete
 theme has its own gallery with fifteen canonical archetypes and possible
 variants. When a revisioned theme is selected, use that exact revision's
 gallery; do not merge it with shipped packs or replace a missing template
@@ -66,13 +66,18 @@ To create and inspect a revisioned gallery, follow
 | `standard/tableau` | Table | `lignes`, `titre` | `entetes`, `eyebrow` |
 | `standard/citation` | Quote | `auteur`, `citation` | `role` |
 | `standard/cloture` | Closing | `etapes`, `message` | `contact`, `eyebrow` |
+| `a4/one-pager` | One-pager | `blocks`, `cta`, `stats`, `title` | `contact`, `cta_detail`, `eyebrow`, `footer`, `subtitle` |
 
 Typical deck skeleton (6 slides): `titre`, `statement` or `contenu` (the problem),
 `cartes` (the offer), `process` (the method), `kpi` (evidence), `cloture` (decision).
 Avoid using the same template twice consecutively when content allows variety.
+Every `standard` and `premium` template is landscape: on a deck created with
+`--format a4`, use `a4/one-pager` (section at the end of this file).
 
 The 25 shipped premium compositions are documented separately in
-[premium-templates.md](premium-templates.md):
+[premium-templates.md](premium-templates.md), including which image to supply:
+a portrait or cut-out portrait for `title-image`, `method-image` and `cta-image`,
+a landscape photo for `image-full`:
 
 `premium/title-image`, `premium/statement`, `premium/takeaway-list`, `premium/approach-arch`, `premium/three-pillars`, `premium/image-full`, `premium/loop`, `premium/statement-light`, `premium/method-image`, `premium/cta-image`, `premium/section-divider`, `premium/content-text`, `premium/content-two-cols`, `premium/card-grid`, `premium/comparison`, `premium/before-after`, `premium/big-number`, `premium/stats`, `premium/quote`, `premium/case-study`, `premium/timeline`, `premium/roadmap`, `premium/checklist`, `premium/matrix-2x2`, `premium/process`.
 
@@ -94,15 +99,7 @@ top left, very large bold left-aligned title in the center, discreet gray subtit
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "titre",
-  "pack": "standard",
-  "slots": {
-    "eyebrow": "",
-    "sous-titre": "",
-    "titre": ""
-  }
-}
+{"id": "titre", "pack": "standard", "slots": {"eyebrow": "", "sous-titre": "", "titre": ""}}
 ```
 
 **Advice.** Title: 2 lines is a hard ceiling, not a target. The box is 320 px high
@@ -129,14 +126,7 @@ One idea, expressed as a conviction.
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "statement",
-  "pack": "standard",
-  "slots": {
-    "eyebrow": "",
-    "phrase": ""
-  }
-}
+{"id": "statement", "pack": "standard", "slots": {"eyebrow": "", "phrase": ""}}
 ```
 
 **Advice.** Statement: 15 words maximum, with a final period. No second sentence.
@@ -161,20 +151,7 @@ prefer `cartes`; if they form a sequence, prefer `process`.
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "contenu",
-  "pack": "standard",
-  "slots": {
-    "corps": "",
-    "eyebrow": "",
-    "points": [
-      {
-        "texte": ""
-      }
-    ],
-    "titre": ""
-  }
-}
+{"id": "contenu", "pack": "standard", "slots": {"corps": "", "eyebrow": "", "points": [{"texte": ""}], "titre": ""}}
 ```
 
 **Advice.** Body: 1 to 2 sentences. Points: 8 words maximum each, preferably
@@ -199,24 +176,7 @@ pillars, before/after (2 cards), a team (name as label, role as detail).
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "cartes",
-  "pack": "standard",
-  "slots": {
-    "cartes": [
-      {
-        "detail": "",
-        "label": ""
-      },
-      {
-        "detail": "",
-        "label": ""
-      }
-    ],
-    "eyebrow": "",
-    "titre": ""
-  }
-}
+{"id": "cartes", "pack": "standard", "slots": {"cartes": [{"detail": "", "label": ""}, {"detail": "", "label": ""}], "eyebrow": "", "titre": ""}}
 ```
 
 **Advice.** Label: 1 to 3 words. Detail: 2 short sentences maximum (even shorter
@@ -240,26 +200,7 @@ engagement steps. The `numero` field is free text: “1”, “01”, “S1”, 
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "process",
-  "pack": "standard",
-  "slots": {
-    "etapes": [
-      {
-        "detail": "",
-        "label": "",
-        "numero": ""
-      },
-      {
-        "detail": "",
-        "label": "",
-        "numero": ""
-      }
-    ],
-    "eyebrow": "",
-    "titre": ""
-  }
-}
+{"id": "process", "pack": "standard", "slots": {"etapes": [{"detail": "", "label": "", "numero": ""}, {"detail": "", "label": "", "numero": ""}], "eyebrow": "", "titre": ""}}
 ```
 
 **Advice.** 3 to 4 steps is optimal. At 5 or 6, shorten labels (2 words) and
@@ -285,26 +226,7 @@ slide with `contenu` (benefits) or `statement`.
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "kpi",
-  "pack": "standard",
-  "slots": {
-    "chiffres": [
-      {
-        "detail": "",
-        "label": "",
-        "valeur": ""
-      },
-      {
-        "detail": "",
-        "label": "",
-        "valeur": ""
-      }
-    ],
-    "eyebrow": "",
-    "titre": ""
-  }
-}
+{"id": "kpi", "pack": "standard", "slots": {"chiffres": [{"detail": "", "label": "", "valeur": ""}, {"detail": "", "label": "", "valeur": ""}], "eyebrow": "", "titre": ""}}
 ```
 
 **Advice.** Value: short and typographic (“30 %”, “x3”, “4 sem.”), never a sentence.
@@ -344,20 +266,7 @@ parsed at instantiation). Fill `categorie`/`valeur`, add up to 12 rows.
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "graphique",
-  "pack": "standard",
-  "slots": {
-    "donnees": [
-      {
-        "categorie": "",
-        "valeur": "0"
-      }
-    ],
-    "eyebrow": "",
-    "titre": ""
-  }
-}
+{"id": "graphique", "pack": "standard", "slots": {"donnees": [{"categorie": "", "valeur": "0"}], "eyebrow": "", "titre": ""}}
 ```
 
 **Advice.** NEVER invent figures: data comes from the user. Short categories
@@ -390,26 +299,7 @@ simple matrix. For figures to emphasize, `kpi`; for a trend, `graphique`.
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "tableau",
-  "pack": "standard",
-  "slots": {
-    "eyebrow": "",
-    "lignes": [
-      {
-        "detail": "",
-        "poste": "",
-        "valeur": ""
-      },
-      {
-        "detail": "",
-        "poste": "",
-        "valeur": ""
-      }
-    ],
-    "titre": ""
-  }
-}
+{"id": "tableau", "pack": "standard", "slots": {"eyebrow": "", "lignes": [{"detail": "", "poste": "", "valeur": ""}, {"detail": "", "poste": "", "valeur": ""}], "titre": ""}}
 ```
 
 To customize the header, add `"entetes": ["Levier","Impact","Délai"]` to
@@ -445,15 +335,7 @@ is not an author). Verify permission before naming a client in a quote.
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "citation",
-  "pack": "standard",
-  "slots": {
-    "auteur": "",
-    "citation": "",
-    "role": ""
-  }
-}
+{"id": "citation", "pack": "standard", "slots": {"auteur": "", "citation": "", "role": ""}}
 ```
 
 **Advice.** Quote: 20 words maximum, direct speech, no quotation marks in the
@@ -480,21 +362,46 @@ the message carries the requested decision; steps say what happens next.
 
 Ready-to-fill binding (`binding_skeleton`):
 ```json
-{
-  "id": "cloture",
-  "pack": "standard",
-  "slots": {
-    "contact": "",
-    "etapes": [
-      {
-        "texte": ""
-      }
-    ],
-    "eyebrow": "",
-    "message": ""
-  }
-}
+{"id": "cloture", "pack": "standard", "slots": {"contact": "", "etapes": [{"texte": ""}], "eyebrow": "", "message": ""}}
 ```
 
 **Advice.** Message: an action-oriented sentence (“We start with the audit.”).
 Steps: concrete and dated if possible. Contact: an email, not a full signature.
+
+## `a4/one-pager`: A4 one-pager
+
+Portrait A4 page (595.28 x 841.89 pt) summarizing an offer or a mission on a
+single printed page. Only for a deck created with `deck new <file> --format a4`:
+every `standard` and `premium` template is landscape and is refused on an A4
+page, with an orientation error that points to this template.
+
+**Appearance.** Background role over the whole page. Eyebrow and large bold
+title at the top, subtitle, a row of 2 to 4 accent key figures under short
+rules, 3 to 6 stacked blocks (bold title on the left, text on the right, accent
+marker), a surface panel holding the call to action, a 7 pt footer and contact.
+
+**When to use.** The single page of an A4 deck: offer, mission summary,
+programme sheet. Bind it on slide 1 of the A4 deck, then run `deck regenerate`,
+`deck lint` and `deck check --no-sheet --json`.
+
+| Slot | Type | Required | Bounds | Item fields / columns |
+| --- | --- | --- | --- | --- |
+| `blocks` | list | yes | 3 to 6 | `text` (required), `title` (required) |
+| `contact` | text | no |  |  |
+| `cta` | text | yes |  |  |
+| `cta_detail` | text | no |  |  |
+| `eyebrow` | text | no |  |  |
+| `footer` | text | no |  |  |
+| `stats` | list | yes | 2 to 4 | `label` (required), `value` (required) |
+| `subtitle` | text | no |  |  |
+| `title` | text | yes |  |  |
+
+Ready-to-fill binding (`binding_skeleton`):
+```json
+{"id": "one-pager", "pack": "a4", "slots": {"blocks": [{"text": "", "title": ""}, {"text": "", "title": ""}, {"text": "", "title": ""}], "contact": "", "cta": "", "cta_detail": "", "eyebrow": "", "footer": "", "stats": [{"label": "", "value": ""}, {"label": "", "value": ""}], "subtitle": "", "title": ""}}
+```
+
+**Advice.** Title: 2 lines maximum. Figure value: short (`-18 %`, `6 wk`);
+label: 2 lines with 4 figures. The blocks share 360 pt of height: with 6 blocks
+keep each text to about two lines, with 3 blocks to four. Call to action: one
+line, its detail one more. Footer and contact: one short line each.

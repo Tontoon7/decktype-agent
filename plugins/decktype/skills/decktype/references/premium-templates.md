@@ -19,6 +19,23 @@ never an image path. Verify the name with `deck icons list --json`; omit
 the field without an icon. These vector icons use the theme accent color
 and require no imported asset.
 
+## Images
+
+No composition veils its photo: colors stay as supplied, and a reading
+panel sits only under the text. Images are cropped by a centered cover fit,
+never stretched.
+
+- `title-image` is a two-zone cover: the image fills a full-height column
+  on the right third (640 x 1080). `method-image` and `cta-image` place it
+  full-height to the right of the reading column (864 x 1080). Give these
+  three a portrait (4:5 or taller) or a cut-out portrait on a transparent
+  background: the full height stays visible, head included. A landscape photo
+  shows only its central part.
+- `image-full` keeps a full-bleed landscape photo (16:9) behind a reading panel
+  at bottom left. Choose a calm photo where the footer sits (bottom right) or
+  omit `footer`.
+- `takeaway-list` keeps its optional image as a veiled backdrop under all text.
+
 ## Uses and slots
 
 The ! suffix marks a required slot. Lists show their bounds followed by
@@ -30,7 +47,7 @@ The composition then retains neither an empty card nor a label.
 
 | Composition | Usage | Slots |
 | --- | --- | --- |
-| `title-image` | Photographic cover with a monumental title, generous framing and a discreet optional logo. | `eyemark`, `footer`, `image!`, `subtitle`, `title!` |
+| `title-image` | Two-zone cover: a monumental title on the left and a full-height photo or cut-out portrait on the right, with a discreet optional logo. | `eyemark`, `footer`, `image!`, `subtitle`, `title!` |
 | `statement` | A single strong statement, centered on a tonal background with a restrained topographic motif. | `caption`, `mark`, `text!` |
 | `takeaway-list` | A decisive takeaway with two or three supporting arguments and an optional photographic backdrop. | `eyemark`, `image`, `insight!`, `subtitle`, `supporting_points!` 2..3 (num!, point!) |
 | `approach-arch` | An editorial explanation and example beside an arch-shaped image, on an inverted theme background. | `definition!`, `example`, `example_label`, `eyemark`, `image!`, `source`, `term!` |
@@ -68,7 +85,7 @@ Image/logo fields consume no text and have no budget.
 
 | Composition | Field: characters / lines |
 | --- | --- |
-| `title-image` | eyemark: 80 / 1 ; footer: 144 / 1 ; subtitle: 159 / 2 ; title: 64 / 4 |
+| `title-image` | eyemark: 80 / 1 ; footer: 96 / 1 ; subtitle: 159 / 2 ; title: 64 / 4 |
 | `statement` | caption: 127 / 1 ; mark: 45 / 1 ; text: 123 / 5 |
 | `takeaway-list` | eyemark: 34 / 1 ; insight: 118 / 3 ; subtitle: 100 / 1 ; supporting_points.num: 5 / 1 ; supporting_points.point: 122 / 1 |
 | `approach-arch` | definition: 297 / 4 ; example: 84 / 1 ; example_label: 28 / 1 ; eyemark: 34 / 1 ; source: 98 / 1 ; term: 33 / 2 |
@@ -76,7 +93,7 @@ Image/logo fields consume no text and have no budget.
 | `image-full` | eyemark: 61 / 1 ; footer: 53 / 2 ; subtitle: 151 / 3 ; title: 70 / 3 |
 | `loop` | eyemark: 82 / 1 ; loop_caption: 98 / 1 ; n1_desc: 158 / 4 ; n1_label: 26 / 1 ; n2_desc: 158 / 4 ; n2_label: 26 / 1 ; n3_desc: 158 / 4 ; n3_label: 26 / 1 ; subtitle: 99 / 2 ; title: 48 / 1 |
 | `statement-light` | attribution: 102 / 1 ; quote: 99 / 4 |
-| `method-image` | eyemark: 68 / 1 ; items.detail: 135 / 2 ; items.num: 5 / 1 ; items.title: 48 / 1 ; title: 47 / 2 |
+| `method-image` | eyemark: 63 / 1 ; items.detail: 135 / 2 ; items.num: 5 / 1 ; items.title: 48 / 1 ; title: 47 / 2 |
 | `cta-image` | contact_info: 72 / 1 ; cta_text: 71 / 2 ; eyemark: 34 / 1 ; subtitle: 60 / 1 ; title: 67 / 3 |
 | `section-divider` | eyemark: 82 / 1 ; index: 4 / 1 ; subtitle: 107 / 1 ; title: 58 / 2 |
 | `content-text` | eyemark: 54 / 1 ; points.text: 86 / 2 ; subtitle: 270 / 4 ; title: 114 / 4 |

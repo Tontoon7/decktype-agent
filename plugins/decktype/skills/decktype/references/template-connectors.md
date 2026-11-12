@@ -1,4 +1,4 @@
-# Correct a template connector
+# Correct a template connector or its arrowheads
 
 A template connector pointing to the wrong place is corrected with an override
 in `template.overrides`, never by editing `elements`. On a LINKED element,
@@ -92,6 +92,7 @@ deck regenerate f.deck                           # slide N: regenerated
 deck validate f.deck --json                      # no "materialized elements diverge"
 deck regenerate f.deck                           # slide N: up to date
 unzip -p f.deck deck.json                        # read the element back
+deck check f.deck --out check --json             # contact sheet, flagged slides
 deck render f.deck --out slides-png              # look at the PNG
 ```
 
@@ -100,6 +101,49 @@ deck render f.deck --out slides-png              # look at the PNG
 - A `path` (rotation 0 after this recipe) goes from `(x + move_to.x * w,
   y + move_to.y * h)` to `(x + line_to.x * w, y + line_to.y * h)`.
 - Inspect the PNG: does the line touch the target point in the right direction?
+
+## 6. Arrowheads (format 0.33.0)
+
+To make a label designate a point, draw a `line` from the label (`from`) to
+the point (`to`) and put the head on `to` with `marker_end`; `marker_start`
+is the `from` end. `shape: arrow` is a filled pictogram, never a pointer.
+
+| `kind` | Drawn at the end | Size (w = max(stroke width, 1), s = `scale`) |
+| --- | --- | --- |
+| `arrow` | filled triangle | length 4ws, base 2ws |
+| `open` | stroked chevron | length 4ws, width 2ws |
+| `dot` | filled disc | radius 1.5ws |
+
+`scale` is optional (default 1, omitted on write), relative to the stroke
+width and clamped to 0.25..4. Heads exist on `line` and open `path` ends only,
+in the stroke color; the shaft is shortened so the tip lands on the point.
+
+- **Free line**: write `marker_end` in its `kind` (cheatsheet `line` example);
+  through `deck patch`, `set_element_kind` with the COMPLETE kind.
+- **Bound line**: one override per end, `null` removing the template head.
+  `set_override` replaces the override with the same `key` and `prop` in place
+  and appends otherwise: the other overrides stay untouched. Never
+  `set_overrides`, which replaces the whole list. Slide ULID from `deck.json`:
+
+```json
+{"version": 1, "commands": [
+  {"op": "set_override", "slide": "<slide ULID>",
+   "retouch": {"key": "conn1", "prop": "marker_end", "value": {"kind": "open", "scale": 1.5}}},
+  {"op": "set_override", "slide": "<slide ULID>",
+   "retouch": {"key": "conn1", "prop": "marker_start", "value": null}}
+]}
+```
+
+```bash
+deck patch f.deck arrows.json --dry-run --json   # every entry applies, file untouched
+deck patch f.deck arrows.json                    # applies and regenerates the slide
+```
+
+Then the loop of section 5 from `deck regenerate` on. `deck validate` warns,
+without error, on an unknown `kind` (kept, nothing drawn), a `scale` outside
+0.25..4 (clamped) and a head on another shape (inert). PowerPoint export
+writes native line ends rounded to `sm` 0.75, `med` 1 or `lg` 1.25 and warns
+on each rounding: prefer these scales for a deck going to PowerPoint.
 
 ## For template authors
 

@@ -1,6 +1,6 @@
 {
   "name": "decktype",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Create, revise, render, and export editable Decktype presentations with an AI coding agent: PDF on every plan, PowerPoint on Pro and Autonomous plans. Requires the Decktype app on an Apple silicon Mac.",
   "author": {
     "name": "Decktype",

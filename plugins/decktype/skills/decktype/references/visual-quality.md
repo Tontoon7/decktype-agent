@@ -5,6 +5,16 @@ Discover `diagnostics.visual` in `deck capabilities --json`.
 measures ink from materialized text elements using renderer formatting.
 Text can fit its own box while extending beyond the slide.
 
+Editorial `small_text` is a warning for nonblank text when the minimum of the
+block size and effective run sizes is below `12 * page_scale` pt; equality
+passes. `page_scale = max(slide.width, slide.height) / 1920`: 1 for 1920x1080
+and 1920x1440, about 0.4385 for A4 (minimum about 5.26 pt, so 4 fails and 9
+passes). Lint contrast keeps its 3:1/2:1 floors, switching at
+`24 * page_scale` pt. Breathing margins remain 3% of each axis.
+A4 PDF pages are 595.28 x 841.89 pt; recognized A4 PowerPoint decks export
+at about 21.0 x 29.7 cm with unchanged source point sizes. Other PowerPoint
+formats keep the historical 12192000 EMU width.
+
 The historical U1 calibration from 2026-09-05, with a fixed 1 pt threshold,
 covers ten small synthetic decks, twenty slides and 53 text blocks, with PNGs
 inspected before reading reports. It finds seven expected overflows without
@@ -95,9 +105,10 @@ Red borders and numbers mark flagged slides.
   offsets remain those of the original text without Unicode normalization.
 - `low_contrast` retains the element's worst style: `ratio`, `minimum`,
   `font_size`, `color` and `run` (zero-based index, or null for text without
-  runs). Minimum is 4.5:1 below 44 px, 3:1 from 44 px; 1 slide point equals
-  1 pixel at scale 1. These thresholds are stricter than `deck lint`'s
-  editorial floor, which remains unchanged.
+  runs). Minimum is 4.5:1 below `44 * page_scale` pt, 3:1 from that boundary
+  (44 pt at scale 1, about 19.29 pt in A4). Report threshold parameters remain
+  the reference values at scale 1. These ratios are stricter than `deck lint`'s
+  editorial floor. `small_text` remains a lint rule, not a check rule.
 - `complete: false` and `uncertainties` require full-size inspection of uncertain
   targets. `--strict` exits with 1 for findings or uncertainties, 0 otherwise,
   2 for an operational error.

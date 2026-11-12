@@ -1,7 +1,7 @@
 {
   "name": "decktype-agent",
   "description": "Decktype plugin for Claude Code: build editable .deck presentations, then export them to PDF or PowerPoint.",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "owner": {
     "name": "Decktype",
     "url": "https://decktype.com"
@@ -11,7 +11,7 @@
       "name": "decktype",
       "displayName": "Decktype",
       "description": "Create, revise, render, and export editable Decktype presentations with Claude Code: PDF on every plan, PowerPoint on Pro and Autonomous plans. Requires the Decktype app on an Apple silicon Mac.",
-      "version": "1.4.2",
+      "version": "1.5.0",
       "author": {
         "name": "Decktype",
         "url": "https://decktype.com"
