@@ -193,6 +193,14 @@ that revision's background (visible in `deck inspect`): activation preserves
 existing backgrounds and `regenerate` does not recalculate them. Replace
 `new`'s empty scaffold with linked content.
 
+To move an existing deck onto the revision, add `--restyle`: in the same atomic
+write, every slide bound to one of the fifteen canonical layouts of a theme
+revision (template id `cover`, `section`, `kpi`, ...) is rebound to the same
+layout of this revision, keeping slots, chart labels and the retouches whose
+element still exists, on the theme background. Free, `standard`, `premium` and
+`a4` slides, variants and user captures stay untouched. The report adds
+`restyled` and `kept` slide counts.
+
 ## 11. Share only on request
 
 Offer workspace sharing only after private installation or synchronization.

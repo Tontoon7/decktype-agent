@@ -244,7 +244,9 @@ Save turns: every agent response costs a turn, and every image read consumes con
    For an image background (`deck theme scaffold --background-image`, format
    0.35.0), activation embeds the image referenced by `theme.background_image`.
    Copy that object to each new slide's `background_image`, beside `background`,
-   never as an image element. Activation leaves existing slides unchanged.
+   never as an image element. Activation leaves existing slides unchanged;
+   add `--restyle` to also rebind the slides built on the canonical layouts of a
+   theme revision to the same layouts of this one (other slides stay as they are).
    If `template.budgets.measured` is advertised, before writing read
    `deck templates show <pack>/<id> --deck mon-deck.deck --json` for each selected
    template. `--slide <slide-id>` uses that slide's revision and size. Budgets are
@@ -690,12 +692,15 @@ veils preserve the product of color alpha and element opacity. Rich export
 verification remains to be run in both readers:
 `docs/qa/pptx-rich-export/README.md`.
 Export requires a Pro or Autonomous plan: `deck cloud login` caches a signed
-entitlement verified offline with the same grace period as the app. Without an
-account, on the free plan or with an expired entitlement, `deck export` exits
-with code 3 and writes nothing (structured report with `--json`). Never bypass
-this refusal: offer to log in or upgrade to Pro, and meanwhile deliver the
-`.deck` or PNGs from `deck render`. After a plan change, `deck cloud status`
-refreshes the entitlement. `deck capabilities --json` describes the requirement
+entitlement verified offline with the same grace period as the app; once it
+has expired, `deck export` refreshes it online once by itself. Without an
+account, on the free plan or with an expired entitlement it cannot refresh,
+`deck export` exits with code 3 and writes nothing (structured report with
+`--json`). With `reason: "session_expired"`, the only fix is the user's: ask
+them to run `deck cloud login` and approve the sign-in. Never bypass this
+refusal: offer to log in or upgrade to Pro, and meanwhile deliver the `.deck`
+or PNGs from `deck render`. After a plan change, `deck cloud status` refreshes
+the entitlement. `deck capabilities --json` describes the requirement
 under `services.entitlements`.
 
 Deliver as PDF (LinkedIn carousel, client deliverable): `deck pdf mon-deck.deck`
