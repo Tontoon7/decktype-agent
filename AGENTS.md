@@ -16,6 +16,7 @@ Public local plugin (MIT) that teaches Claude Code and Codex to build, revise, r
 - `plugins/decktype-connector/` — separate remote connector preparation, root/Codex manifests, MCP configurations, copied brand icons, and explicit submission limitations. Never add it to either marketplace.
 - `scripts/build_openai_submission.py`, `tests/test_openai_submission.py` — deterministic ZIP builder and local safety/content contracts, Python 3.9+, standard library only.
 - `docs/openai-submission.md` — English remote connector listing, shared web/mobile review matrix, provenance, and official validation status.
+- `plugins/decktype-antigravity/` — the same remote connector packaged for the Antigravity Marketplace: `plugin.json` (Antigravity schema), `mcp_config.json`, Marketplace `README.md`, app icon. Its own version, initially `0.1.0`. Never add it to either marketplace file; `docs/antigravity-submission.md` holds its listing and validation status.
 - `tests/test_release.py` — release contract; `tests/fixtures/deck-cli-1.3.2.json` — public commands and options of the published `deck` CLI.
 
 ## Commandes

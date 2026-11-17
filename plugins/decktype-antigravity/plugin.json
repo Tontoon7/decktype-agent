@@ -1,0 +1,21 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "decktype",
+  "displayName": "Decktype",
+  "version": "0.1.0",
+  "description": "Create and revise editable presentations with your agent, preview each slide, then open the deck in the Decktype editor.",
+  "logo": "assets/app-icon.svg",
+  "suggestedPrompts": [
+    "Create a five-slide presentation about our quarterly results from these facts: <facts>",
+    "Find my latest Decktype presentation and update its key figures",
+    "Show me the second slide of my presentation and give me its editor link"
+  ],
+  "author": {
+    "name": "Kairia",
+    "url": "https://decktype.com"
+  },
+  "homepage": "https://decktype.com/en/connectors",
+  "repository": "https://github.com/Tontoon7/decktype-agent",
+  "license": "MIT",
+  "keywords": ["presentations", "slides", "decktype"]
+}
