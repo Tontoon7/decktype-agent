@@ -1,15 +1,13 @@
 # Decktype for Claude
 
-Ask Claude for a presentation and get an editable deck in Decktype, not a static file. Claude agrees on the audience and the decision with you, builds each slide from Decktype templates, checks the result, and gives you a private link to finish the deck in the Decktype editor. When Claude revises it later, your manual retouches are kept.
-
-![A presentation built with Decktype](examples/slide-01.png)
+Ask Claude for a presentation and get an editable deck in Decktype, not a static file. Claude agrees on the audience and the decision with you, builds each slide from Decktype templates, checks the result, and gives you a private link to finish the deck in the Decktype editor. When Claude later edits the text and figures of a slide, your manual retouches on it are kept.
 
 ## What it contains
 
 - The **Decktype connector**, a remote MCP server at `https://api.decktype.com/mcp`. You connect it once from the plugin's **Connectors** tab and sign in with your Decktype account.
 - The **decktype-cloud skill**, which tells Claude how to use it: settle the story first, prefer the premium templates, preview dense slides before delivering, revise with the current revision, and update recurring reports in place.
 
-It works in Claude chat, Cowork, and Claude Code, with no app to install. To build `.deck` files locally on a Mac with the `deck` command, use the `decktype` plugin from the same repository instead.
+It works in Claude chat, Cowork, and Claude Code, with no app to install. Through the connector, decks use Decktype's built-in theme and contain no images: you add images in the Decktype editor, and handle brand styles and PDF or PowerPoint exports in Decktype. To build `.deck` files locally on a Mac with the `deck` command, use the `decktype` plugin from the same repository instead.
 
 ## Example prompts
 
