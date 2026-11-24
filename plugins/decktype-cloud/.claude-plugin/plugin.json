@@ -1,0 +1,18 @@
+{
+  "name": "decktype-cloud",
+  "displayName": "Decktype",
+  "version": "0.1.0",
+  "description": "Create and revise editable presentations in Decktype Cloud from Claude, then finish them in the Decktype editor.",
+  "author": {
+    "name": "Decktype",
+    "url": "https://decktype.com"
+  },
+  "homepage": "https://decktype.com/en/connectors",
+  "repository": "https://github.com/Tontoon7/decktype-agent",
+  "license": "MIT",
+  "keywords": [
+    "presentations",
+    "slides",
+    "decktype"
+  ]
+}

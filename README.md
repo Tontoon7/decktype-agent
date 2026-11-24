@@ -115,6 +115,15 @@ The local `plugins/decktype` plugin does not add hooks, background services, an 
 
 The plugin version matches the Decktype app release it follows. The current repository validation uses `deck` CLI 1.3.2; PDF export needs `deck` 1.3.2 or newer. Update Decktype and choose **Connect an agent** again if `deck pdf --help` fails.
 
+## Claude chat plugin
+
+`plugins/decktype-cloud/` is a separate plugin for Anthropic's Claude directory.
+It references the remote Decktype connector (`https://api.decktype.com/mcp`) and
+adds a skill for it, so it works in Claude chat, Cowork, and Claude Code without
+the Mac app or the `deck` CLI. It is kept out of both marketplaces above and is
+submitted to the directory from its folder; listing texts are in
+[docs/directory-submission.md](docs/directory-submission.md#claude-chat-plugin-decktype-cloud).
+
 ## Remote connector preparation for OpenAI
 
 `plugins/decktype-connector/` is a separate package for the remote Decktype MCP

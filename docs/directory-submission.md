@@ -134,3 +134,18 @@ codex plugin add decktype@decktype-agent
 - Tarifs : https://decktype.com/fr/tarifs
 - Politique de confidentialité : https://decktype.com/fr/confidentialite (EN : https://decktype.com/en/privacy)
 - Conditions d'utilisation : https://decktype.com/fr/conditions (EN : https://decktype.com/en/terms)
+
+## Claude chat plugin (decktype-cloud)
+
+Submitted from the Claude developer portal as a **Plugin bundle**: repository `Tontoon7/decktype-agent`, plugin path `plugins/decktype-cloud`. Pair it with the Decktype MCP connector listing, submitted from the same organization; both use `https://api.decktype.com/mcp`. Name, display name and short description come from `plugins/decktype-cloud/.claude-plugin/plugin.json`, the long description from its README.
+
+**Short description:** Create and revise editable presentations in Decktype Cloud from Claude, then finish them in the Decktype editor.
+
+**Limits to state if asked:** built-in theme only through the connector; no images in or out; exports happen in Decktype, not through the connector.
+
+**Example prompts:**
+
+- Prepare a 6-slide proposal for the steering committee from these notes, and show me the outline first.
+- Update last month's sales report deck with the figures in this table.
+- Show me slide 3 of my quarterly review and shorten its text.
+
